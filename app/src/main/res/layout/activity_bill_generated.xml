@@ -11,90 +11,97 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:padding="10dp"
-        android:elevation="10dp"
         android:background="@drawable/style_tv"
+        android:elevation="10dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:gravity="center_horizontal|top"
             android:text="Bill Generated"
             android:textColor="@color/text_black"
-            android:textStyle="bold"
             android:textSize="30dp"
-            android:gravity="center_horizontal|top"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="Name: Balibai Nanadu Patil"/>
+            android:text="Name: Balibai Nanadu Patil"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/tvConnection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="Connection#: 168"/>
+            android:text="Connection#: 168"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/tvAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="Address: House #433, Shivkar, \n\t\t\t\t\t\t\t\tPost-Chikhle, Panvel, Raigad"/>
+            android:text="Address: House #433, Shivkar, \n\t\t\t\t\t\t\t\tPost-Chikhle, Panvel, Raigad"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/tvCurrentReading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="Reading: 545"/>
+            android:text="Reading: 545"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/tvUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="Units: 12 "/>
+            android:text="Units: 12 "
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/tvBillAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="Bill: Rs.535"/>
+            android:text="Bill: Rs.535"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/tvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:text="\n\nEmail sent to balibai@gmail.com"/>
+            android:text="\n\nEmail sent to balibai@gmail.com"
+            android:textSize="12dp" />
+
         <TextView
             android:id="@+id/tvPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:text="SMS sent to 9876543210\n\n"/>
+            android:text="SMS sent to 9876543210"
+            android:textSize="12dp" />
+
         <Button
-            android:id="@+id/button"
-            android:onClick="goToHome"
+            android:id="@+id/btnHome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@drawable/style_btn"
+            android:onClick="goToHome"
             android:text="go to home"
-            android:textColor="@color/text_white"
             android:textAllCaps="true"
+            android:textColor="@color/text_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etConnectionNumber" />
-
 
 
     </LinearLayout>
