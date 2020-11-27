@@ -4,6 +4,7 @@ package com.amol.waterbill.network;
 
 
 import com.amol.waterbill.model.GenericResponse;
+import com.amol.waterbill.model.UserModel;
 
 import java.util.List;
 
@@ -29,4 +30,20 @@ public interface API {
             @Field("email") String email,
             @Field("address") String address);
 //            @Field("status") String status);
+
+    @GET("get_Last_Bill.php")
+    Call<UserModel> get_Last_Bill(
+            @Query("connection") String connection);
+
+    @FormUrlEncoded
+    @POST("water_create_bill.php")
+    Call<GenericResponse> water_create_bill(
+            @Field("unit") String unit,
+            @Field("unit_price") String unit_price,
+            @Field("amount") String amount,
+            @Field("current_reading") String current_reading,
+            @Field("last_reading") String last_reading,
+            @Field("user_id") String user_id,
+            @Field("connection") String connection,
+            @Field("status") String status);
 }
