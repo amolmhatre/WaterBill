@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Waterbill</string>
+    <string name="SHARED_PREFERENCE_KEY">BOMBILL_CUSTOMER</string>
+
 </resources>
