@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amol.waterbill.model.GenericResponse;
 import com.amol.waterbill.network.RetrofitClient;
@@ -32,20 +33,20 @@ public class CustomerDetail extends AppCompatActivity {
     private static TextView tvActionBarTitle,tvName,tvConnection,tvAddress,tvLastReading;
     private static EditText etCurrentReading;
     private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor editor;
     private static Button btnCreateBill;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_detail);
         sharedPreferences = this.getSharedPreferences(String.valueOf(R.string.SHARED_PREFERENCE_KEY), MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.action_bar);
         //getSupportActionBar().setElevation(0);
-
 
         /** Initialize UI components */
         tvName = (TextView) findViewById(R.id.tvName);
@@ -74,20 +75,28 @@ public class CustomerDetail extends AppCompatActivity {
         btnCreateBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                generateBill();
+                String currentReading = etCurrentReading.getText().toString();
+                if (Integer.parseInt(currentReading)>Integer.parseInt(sharedPreferences.getString("current_reading",null))) {
+                    generateBill(currentReading);
+                } else {
+                    Toast.makeText(getBaseContext(),"Current Reading मागच्या महिन्यातील reading पेक्षा जास्त हवी. ",Toast.LENGTH_SHORT ).show();
+                }
             }
         });
     }
 
     /** Called when the user taps button */
-    public void generateBill() {
+    public void generateBill(String currentReading) {
         Log.d(TAG,"generateBill");
-        String currentReading = etCurrentReading.getText().toString();
         int intCurrentReading = Integer.parseInt(currentReading);
         int intLastReaading = Integer.parseInt(sharedPreferences.getString("current_reading",null));
         int intUnit = intCurrentReading-intLastReaading;
         int intUnitPrice = Integer.parseInt(sharedPreferences.getString("unit_price",null));
         int intAmount = intUnit*intUnitPrice;
+
+        editor.putString("amount", intAmount+"");
+        editor.putString("current_reading",intCurrentReading+"");
+        editor.apply();
 
         Call<GenericResponse> call = RetrofitClient.getInstance().getApi().water_create_bill(
                 intUnit+"",

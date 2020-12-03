@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="नाव"
             android:textColor="@color/text_black"
             android:textSize="15dp" />
 
@@ -39,7 +39,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Connection Number"
+            android:text="कनेक्शन नंबर
+"
             android:textColor="@color/text_black"
             android:textSize="15dp" />
 
@@ -55,7 +56,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Address"
+            android:text="पत्ता"
             android:textColor="@color/text_black"
             android:textSize="15dp" />
 
@@ -71,7 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Last month reading"
+            android:text="मागच्या महिन्यातील रीडिंग"
             android:textColor="@color/text_black"
             android:textSize="15dp" />
 
@@ -90,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Enter current reading"
+        android:text="👇🏻 चालू  महिन्यातील रिडींग टाका "
         android:textColor="@color/text_black"
         android:textSize="25dp"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"

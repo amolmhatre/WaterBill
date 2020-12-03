@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static EditText etConnectionNumber;
     private static Button btnGetConnection,btnRegisterConnection;
     private static UserModel userModel;
+    private static String connectionNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
     /** Called when the user taps button */
     public void getConnection() {
             Log.d(TAG,"getConnection");
-             final String connectionNumber = etConnectionNumber.getText().toString();
+            connectionNumber = etConnectionNumber.getText().toString();
 
             Call<UserModel> call = RetrofitClient.getInstance().getApi().get_Last_Bill(connectionNumber);
             call.enqueue(new Callback<UserModel>() {
                 @Override
                 public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                     userModel=response.body();
-                    saveUserData(connectionNumber);
+                    saveUserData();
                 }
                 @Override
                 public void onFailure(Call<UserModel> call, Throwable t) {
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void saveUserData(String connectionNumber) {
+    private void saveUserData() {
         editor.putString("connectionNumber", connectionNumber);
         editor.putString("bill_no", userModel.getBillNo());
         editor.putString("bill_cycle", userModel.getBillCycle());
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("mobile_no", userModel.getMobileNo());
         editor.putString("email", userModel.getEmail());
         editor.putString("address", userModel.getAddress());
-        editor.commit();
+        editor.apply();
         getConnectionReading();
     }
 
