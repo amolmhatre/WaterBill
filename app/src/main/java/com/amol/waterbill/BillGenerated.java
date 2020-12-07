@@ -3,6 +3,7 @@ package com.amol.waterbill;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -44,8 +45,6 @@ public class BillGenerated extends AppCompatActivity {
 
         Intent intent = getIntent();
         bill_number = intent.getStringExtra("bill_number");
-
-
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +54,7 @@ public class BillGenerated extends AppCompatActivity {
         getUserData();
     }
 
+    @SuppressLint("SetTextI18n")
     private void getUserData() {
         Log.d(TAG,sharedPreferences.getString("name", "user name")+"\n"+
                 sharedPreferences.getString("connectionNumber", "user name")+"\n"+

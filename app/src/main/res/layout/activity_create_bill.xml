@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomerDetail">
+    tools:context=".CreateBill">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -84,7 +84,55 @@
             android:text="February-March 2020 \n 590"
             android:textColor="@color/text_gray"
             android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="थकबाकी"
+            android:textColor="@color/text_black"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tvPendingBill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="₹ 252"
+            android:textColor="@color/text_gray"
+            android:textSize="12dp" />
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="👇🏻 महिना आणि वर्ष निवडा"
+        android:textColor="@color/text_black"
+        android:textSize="25dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
+
+    <Spinner
+        android:id="@+id/spinnerMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewEnd"
+        android:tooltipText="Product Category"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toStartOf="@+id/textView1"
+        app:layout_constraintTop_toBottomOf="@+id/textView1"/>
+    <Spinner
+        android:id="@+id/spinnerYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewEnd"
+        android:tooltipText="Product Category"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toEndOf="@+id/spinnerMonth"
+        app:layout_constraintTop_toBottomOf="@+id/textView1"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -94,8 +142,8 @@
         android:text="👇🏻 चालू  महिन्यातील रिडींग टाका "
         android:textColor="@color/text_black"
         android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintStart_toStartOf="@+id/textView1"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerMonth" />
 
     <EditText
         android:id="@+id/etCurrentReading"

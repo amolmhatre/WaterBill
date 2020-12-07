@@ -3,43 +3,45 @@ package com.amol.waterbill;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amol.waterbill.model.GenericResponse;
 import com.amol.waterbill.network.RetrofitClient;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CustomerDetail extends AppCompatActivity {
+public class CreateBill extends AppCompatActivity {
 
-    private static final String TAG = "CustomerDetail";
+    private static final String TAG = "CreateBill";
 
-    private static TextView tvActionBarTitle,tvName,tvConnection,tvAddress,tvLastReading;
+    private static TextView tvActionBarTitle,tvName,tvConnection,
+            tvAddress,tvLastReading,tvPendingBill;
     private static EditText etCurrentReading;
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static Button btnCreateBill;
+    private static Spinner spinnerMonth, spinnerYear;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_detail);
+        setContentView(R.layout.activity_create_bill);
         sharedPreferences = this.getSharedPreferences(String.valueOf(R.string.SHARED_PREFERENCE_KEY), MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -54,18 +56,27 @@ public class CustomerDetail extends AppCompatActivity {
         tvAddress = (TextView) findViewById(R.id.tvAddress);
         tvLastReading = (TextView) findViewById(R.id.tvLastReading);
         tvActionBarTitle = (TextView) findViewById(R.id.tvActionBarTitle);
+        tvPendingBill = (TextView) findViewById(R.id.tvPendingBill);
         etCurrentReading = (EditText) findViewById(R.id.etCurrentReading);
         btnCreateBill = (Button) findViewById(R.id.btnCreateBill);
+        spinnerMonth = (Spinner) findViewById(R.id.spinnerMonth);
+        spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
+
+        ArrayAdapter monthAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.month_english));
+        ArrayAdapter yearAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.year));
+        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        /** Setting the ArrayAdapter data on the Spinner */
+        spinnerMonth.setAdapter(monthAdapter);
+        spinnerYear.setAdapter(yearAdapter);
 
         /** Setting values to UI components */
         tvName.setText(sharedPreferences.getString("name","User Name"));
         tvConnection.setText(sharedPreferences.getString("connectionNumber","Connection Number"));
-        tvAddress.setText(sharedPreferences.getString("address","User Address"));
-
-        String strDate = sharedPreferences.getString("bill_cycle",null);
-        tvLastReading.setText(getMonth(Integer.parseInt(strDate.substring(5,7)))+" "+
-                strDate.substring(0,4)+"\n"+
-                sharedPreferences.getString("current_reading","Last Reading"));
+        tvAddress.setText(  sharedPreferences.getString("address","User Address"));
+        tvLastReading.setText(sharedPreferences.getString("bill_cycle","Bill Cycle")+"\n"+
+                sharedPreferences.getString("current_reading","Last Reading")+" युनिट");
+        tvPendingBill.setText("₹ "+sharedPreferences.getString("pending_bill","pending_bill"));
 
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -79,7 +90,7 @@ public class CustomerDetail extends AppCompatActivity {
                 if (Integer.parseInt(currentReading)>Integer.parseInt(sharedPreferences.getString("current_reading",null))) {
                     generateBill(currentReading);
                 } else {
-                    Toast.makeText(getBaseContext(),"Current Reading मागच्या महिन्यातील reading पेक्षा जास्त हवी. ",Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(getBaseContext(),"चालू महिन्याची reading मागच्या reading पेक्षा जास्त असावी ",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -94,8 +105,17 @@ public class CustomerDetail extends AppCompatActivity {
         int intUnitPrice = Integer.parseInt(sharedPreferences.getString("unit_price",null));
         int intAmount = intUnit*intUnitPrice;
 
+        Log.d(TAG,"\nCurrent Reading "+intCurrentReading+
+                "\nLastReading: "+intLastReaading+
+                "\nTotal=>"+intUnit+" * "+intUnitPrice+" = "+intAmount);
+
+        String bill_cycle = spinnerMonth.getSelectedItem().toString()+"-"+
+                spinnerYear.getSelectedItem().toString();
+
         editor.putString("amount", intAmount+"");
+        editor.putString("unit", intUnit+"");
         editor.putString("current_reading",intCurrentReading+"");
+        editor.putString("bill_cycle", bill_cycle);
         editor.apply();
 
         Call<GenericResponse> call = RetrofitClient.getInstance().getApi().water_create_bill(
@@ -104,6 +124,7 @@ public class CustomerDetail extends AppCompatActivity {
                 intAmount+"",
                 intCurrentReading+"",
                 intLastReaading+"",
+                bill_cycle,
                 sharedPreferences.getString("user_id",null),
                 sharedPreferences.getString("connectionNumber",null),
                 "created"

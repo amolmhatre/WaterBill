@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/style_btn"
-        android:text="get reading"
+        android:text="रिडींग घ्या"
+        android:textSize="20dp"
         android:textColor="@color/text_white"
         android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,12 +39,28 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/style_btn"
-        android:text="register"
+        android:text="नवीन कनेक्शन"
+        android:textSize="20dp"
         android:textColor="@color/text_white"
         android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGetConnection" />
+
+    <Button
+        android:id="@+id/btnUserList"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/style_btn"
+        android:text="कनेक्शनची यादी"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        android:textColor="@color/text_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegisterConnection" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

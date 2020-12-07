@@ -46,6 +46,9 @@ public class UserModel {
     @SerializedName("address")
     @Expose
     private String address;
+    @SerializedName("pending_bill")
+    @Expose
+    private String pendingBill;
 
     public String getBillNo() {
         return billNo;
@@ -143,4 +146,11 @@ public class UserModel {
         this.address = address;
     }
 
+    public String getPendingBill() {
+        return pendingBill;
+    }
+
+    public void setPendingBill(String pendingBill) {
+        this.pendingBill = pendingBill;
+    }
 }
