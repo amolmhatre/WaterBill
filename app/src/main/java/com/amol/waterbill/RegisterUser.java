@@ -35,16 +35,13 @@ public class RegisterUser extends AppCompatActivity {
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.action_bar);
-
         tvActionBarTitle = (TextView) findViewById(R.id.tvActionBarTitle);
         etConnection = (TextView) findViewById(R.id.etConnection);
         etName = (TextView) findViewById(R.id.etName);
         etMobile = (TextView) findViewById(R.id.etMobile);
         etEmail = (TextView) findViewById(R.id.etEmail);
         etAddress = (TextView) findViewById(R.id.etAddress);
-
         tvActionBarTitle.setText("Register Connection");
-
         btnRegisterConnection = (Button) findViewById(R.id.btnRegisterConnection);
         btnRegisterConnection.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,10 +67,37 @@ public class RegisterUser extends AppCompatActivity {
                 if (genericResponse.getError().equals("200")) {
                     Toast.makeText(getApplicationContext(),"Connection added successfully", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterUser.this, MainActivity.class);
+                    generateInitialBill();
                     startActivity(intent);
                 } else if (genericResponse.getError().equals("409")) {
                     Toast.makeText(getApplicationContext(),"Already Exist", Toast.LENGTH_SHORT).show();
                 }
+            }
+            @Override
+            public void onFailure(Call<GenericResponse> call, Throwable t) {
+            }
+        });
+    }
+
+    /** Called when the user taps button */
+    public void generateInitialBill() {
+        Log.d(TAG,"generateInitialBill");
+
+        Call<GenericResponse> call = RetrofitClient.getInstance().getApi().water_create_bill(
+                "0",
+                "12",
+                "0",
+                "0",
+                "0",
+                "New User",
+                "0",
+                strConnection,
+                "active"
+        );
+
+        call.enqueue(new Callback<GenericResponse>() {
+            @Override
+            public void onResponse(Call<GenericResponse> call, Response<GenericResponse> response) {
             }
             @Override
             public void onFailure(Call<GenericResponse> call, Throwable t) {
